@@ -5,7 +5,7 @@ jdk:
 - oraclejdk8
 language: ruby
 rvm:
--2.2.1
+-2.2.2
 env:
   global:
   - INTEGRATION_LOGFILE=/var/tmp/aspace-integration.log
