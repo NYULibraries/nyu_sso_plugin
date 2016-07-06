@@ -16,12 +16,11 @@ class ArchivesSpaceService < Sinatra::Base
 
     auth = request.env['omniauth.auth']
 
-    if (!auth.valid?) ||(auth[:provider]!="nyu_shibboleth")
+    if auth.nil? || !auth.valid? || auth[:provider]!="nyulibraries"
       redirect("#{AppConfig[:frontend_url]}/login_sso?error=failed")
-
     end
 
-    username=auth.info.email.split('@')[0]
+    username=auth.uid
     auth_token=auth.credentials.token
 
     user = User.find(:username => username)

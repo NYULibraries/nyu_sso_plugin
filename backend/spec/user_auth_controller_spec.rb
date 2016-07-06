@@ -1,14 +1,14 @@
 require_relative '../../../../backend/app/lib/auth_helpers'
+require_relative 'spec_helper'
 include AuthHelpers
 
 describe 'Authentication callback' do
   let(:user) { create(:user, :username=>'test_sso')}
   before do
-    OmniAuth.config.test_mode = true
-    OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyu_shibboleth,
-                                             "uid"=>"name",
+    OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
+                                             "uid"=>"test_sso",
                                              "info"=>
-                                                 {"name"=>"name",
+                                                 {"name"=>"test_sso",
                                                   "nickname"=>"name",
                                                   "email"=>"test_sso@site.com"},
                                              "credentials"=>
@@ -18,23 +18,22 @@ describe 'Authentication callback' do
                                              "extra"=>
                                                  {"provider"=>:nyulibraries,
                                                   "identities"=>nil},})
-    get 'auth/doorkeeper/callback'
+    get 'auth/nyulibraries/callback'
   end
   context 'when login was successful' do
     it 'should redirect to the frontend login_sso method after login' do
     expect(last_response.redirect?).to be true
     follow_redirect!
-    expect(Session.find(last_request.params['session'])[:user]).to eq('test_sso')
     expect(last_request.path).to eq('/login_sso')
+    expect(Session.find(last_request.params['session'])[:user]).to eq('test_sso')
     end
   end
     context 'when user does not exist' do
       before do
-        OmniAuth.config.test_mode = true
-        OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyu_shibboleth,
-                                                 "uid"=>"name",
+        OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
+                                                 "uid"=>"name1",
                                                  "info"=>
-                                                     {"name"=>"name",
+                                                     {"name"=>"name1",
                                                       "nickname"=>"name",
                                                       "email"=>"test1@site.com"},
                                                  "credentials"=>
@@ -44,29 +43,16 @@ describe 'Authentication callback' do
                                                  "extra"=>
                                                      {"provider"=>:nyulibraries,
                                                       "identities"=>nil},})
-        get 'auth/doorkeeper/callback'
+        get 'auth/nyulibraries/callback'
       end
       it 'should be created' do
-        expect(User.find(:username=>'test1')).not_to be nil
+        expect(User.find(:username=>'name1')).not_to be nil
       end
     end
-  context 'when user logins not through nyu_shibboleth' do
+  context 'when user login is invalid' do
     before do
-      OmniAuth.config.test_mode = true
-      OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
-                                               "uid"=>"name",
-                                               "info"=>
-                                                   {"name"=>"name",
-                                                    "nickname"=>"name",
-                                                    "email"=>"email@site.com"},
-                                               "credentials"=>
-                                                   {"token"=>"token",
-                                                    "expires_at"=>1111111111,
-                                                    "expires"=>true},
-                                               "extra"=>
-                                                   {"provider"=>:nyulibraries,
-                                                    "identities"=>nil},})
-      get 'auth/doorkeeper/callback'
+      OmniAuth.config.mock_auth[:nyulibraries] = nil
+      get 'auth/nyulibraries/callback'
     end
     it 'should send error message' do
       follow_redirect!

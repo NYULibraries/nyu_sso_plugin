@@ -10,7 +10,7 @@ include SsoauthHelper
        :secret => 'archivesspace remote SSO session'
 
    use OmniAuth::Builder do
-    provider :'nyulibraries','e053a72f8a61de4b401b002be59252076aaf88bb79aef99ca22b31d910eccbae',hiera archivessapce::auth_key
+    provider :'nyulibraries','e053a72f8a61de4b401b002be59252076aaf88bb79aef99ca22b31d910eccbae','key'
    end
 
   end
