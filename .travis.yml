@@ -3,6 +3,9 @@ jdk:
 - openjdk7
 - oraclejdk7
 - oraclejdk8
+language: ruby
+rvm:
+-2.2.1
 env:
   global:
   - INTEGRATION_LOGFILE=/var/tmp/aspace-integration.log
@@ -22,6 +25,9 @@ before_script:
 - echo $dir_name
 - mkdir -p archivesspace/plugins/$dir_name/backend
 - cp -r backend/* archivesspace/plugins/$dir_name/backend
+- mkdir -p archivesspace/plugins/$dir_name/frontend
+- cp -r frontend/* archivesspace/plugins/$dir_name/frontend
+- cp Gemfile archivesspace/plugins/$dir_name/
 - echo "AppConfig[:plugins] = ['$dir_name']"  > archivesspace/common/config/config.rb
 - cp build.xml archivesspace/build
 notifications:
