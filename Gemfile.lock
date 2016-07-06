@@ -44,7 +44,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ffi (~> 1.9.12)
   omniauth-nyulibraries!
   omniauth-oauth2 (~> 1.2.0)
   selenium-webdriver
