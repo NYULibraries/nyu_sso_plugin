@@ -35,7 +35,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  multipart-post (= 1.2.0)
   omniauth-nyulibraries!
   omniauth-oauth2 (~> 1.2.0)
 
