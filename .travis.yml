@@ -21,9 +21,9 @@ before_script:
 - mkdir -p opt
 - cd opt
 - git clone --branch 1.5-rc3-changed-rspec-tests https://github.com/NYULibraries/archivesspace.git
-- mkdir -p archivesspace/plugins/nyu_sso_pugin/backend
+- mkdir -p archivesspace/plugins/nyu_sso_plugin/backend
 - cp -r ../backend/* archivesspace/plugins/nyu_sso_plugin/backend
-- mkdir -p archivesspace/plugins/$dir_name/frontend
+- mkdir -p archivesspace/plugins/nyu_sso_plugin/frontend
 - cp -r ../frontend/* archivesspace/plugins/nyu_sso_plugin/frontend
 - cp Gemfile archivesspace/plugins/nyu_sso_plugin/
 - echo "AppConfig[:plugins] = ['$dir_name']"  > archivesspace/common/config/config.rb
