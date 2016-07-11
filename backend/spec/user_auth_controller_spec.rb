@@ -5,7 +5,7 @@ include AuthHelpers
 describe 'Authentication callback' do
   let(:user) { create(:user, :username=>'test_sso')}
   before do
-    OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
+    OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyu_shibboleth,
                                              "uid"=>"test_sso",
                                              "info"=>
                                                  {"name"=>"test_sso",
@@ -30,7 +30,7 @@ describe 'Authentication callback' do
   end
     context 'when user does not exist' do
       before do
-        OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
+        OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyu_shibboleth,
                                                  "uid"=>"name1",
                                                  "info"=>
                                                      {"name"=>"name1",

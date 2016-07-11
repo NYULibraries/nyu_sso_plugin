@@ -2,7 +2,7 @@ require "net/http"
 require "uri"
 require "sinatra/base"
 require 'aspace_logger'
-require_relative '../../../../backend/app/lib/auth_helpers'
+require_relative '../lib/ssoauth_helper'
 
 class ArchivesSpaceService < Sinatra::Base
   include BCrypt
@@ -16,7 +16,7 @@ class ArchivesSpaceService < Sinatra::Base
 
     auth = request.env['omniauth.auth']
 
-    if auth.nil? || !auth.valid? || auth[:provider]!="nyulibraries"
+    if auth.nil? || !auth.valid? || auth[:provider]!="nyu_shibboleth"
       redirect("#{AppConfig[:frontend_url]}/login_sso?error=failed")
     end
 

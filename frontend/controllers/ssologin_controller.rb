@@ -40,7 +40,7 @@ class SsologinController < ApplicationController
 
   def logout()
     reset_session
-    redirect_to :root
+    redirect("https://login.library.nyu.edu/logged_out")
   end
 
   end
