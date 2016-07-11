@@ -27,9 +27,9 @@ before_script:
 - cp -r ../frontend/* archivesspace/plugins/nyu_sso_plugin/frontend
 - cp ../Gemfile archivesspace/plugins/nyu_sso_plugin/
 - echo "AppConfig[:plugins] = ['nyu_sso_plugins']"  > archivesspace/common/config/config.rb
-- git clone --branch master https://github.com/NYULibraries/omniauth-nyulibraries
+- git clone --branch master https://github.com/NYULibraries/omniauth-nyulibraries.git
 - mkdir -p archivesspace/plugins/nyu_sso_plugin/gems/gems
-- cp -r omniauth-nyulibraries* archivesspace/plugins/nyu_sso_plugin/gems/gems
+- cp -r omniauth-nyulibraries archivesspace/plugins/nyu_sso_plugin/gems/gems/
 - cp ../build.xml archivesspace/build
 notifications:
   slack: nyu-dlts:soXKrVQlFYngL6O9HvlcZFz2
