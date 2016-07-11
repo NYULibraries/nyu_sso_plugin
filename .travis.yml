@@ -21,17 +21,15 @@ before_script:
 - mkdir -p opt
 - cd opt
 - git clone --branch 1.5-rc3-changed-rspec-tests https://github.com/NYULibraries/archivesspace.git
-- dir_name=${PWD##*/}
-- echo $dir_name
-- mkdir -p archivesspace/plugins/$dir_name/backend
-- cp -r backend/* archivesspace/plugins/$dir_name/backend
+- mkdir -p archivesspace/plugins/nyu_sso_pugin/backend
+- cp -r ../backend/* archivesspace/plugins/nyu_sso_plugin/backend
 - mkdir -p archivesspace/plugins/$dir_name/frontend
-- cp -r frontend/* archivesspace/plugins/$dir_name/frontend
-- cp Gemfile archivesspace/plugins/$dir_name/
+- cp -r ../frontend/* archivesspace/plugins/nyu_sso_plugin/frontend
+- cp Gemfile archivesspace/plugins/nyu_sso_plugin/
 - echo "AppConfig[:plugins] = ['$dir_name']"  > archivesspace/common/config/config.rb
 - cp -r git clone --branch master https://github.com/NYULibraries/omniauth-nyulibraries
-- mkdir -p archivesspace/plugins/$dir_name/gems/gems
-- cp -r omniauth-nyulibraries* archivesspace/plugins/$dir_name/gems/gems
+- mkdir -p archivesspace/plugins/nyu_sso_plugin/gems/gems
+- cp -r omniauth-nyulibraries* archivesspace/plugins/nyu_sso_plugin/gems/gems
 - cp build.xml archivesspace/build
 notifications:
   slack: nyu-dlts:soXKrVQlFYngL6O9HvlcZFz2
