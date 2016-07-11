@@ -23,11 +23,12 @@ before_script:
 - git clone --branch 1.5-rc3-changed-rspec-tests https://github.com/NYULibraries/archivesspace.git
 - dir_name=${PWD##*/}
 - echo $dir_name
+- cd
 - mkdir -p archivesspace/plugins/$dir_name/backend
-- cp -r backend/* archivesspace/plugins/$dir_name/backend
+- cp -r ../backend/* archivesspace/plugins/$dir_name/backend
 - mkdir -p archivesspace/plugins/$dir_name/frontend
-- cp -r frontend/* archivesspace/plugins/$dir_name/frontend
-- cp Gemfile archivesspace/plugins/$dir_name/
+- cp -r ../frontend/* archivesspace/plugins/$dir_name/frontend
+- cp ../Gemfile archivesspace/plugins/$dir_name/
 - echo "AppConfig[:plugins] = ['$dir_name']"  > archivesspace/common/config/config.rb
 - cp -r git clone --branch master https://github.com/NYULibraries/omniauth-nyulibraries
 - mkdir -p archivesspace/plugins/$dir_name/gems/gems
