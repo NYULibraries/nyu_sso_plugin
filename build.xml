@@ -108,7 +108,6 @@
     <antcall target="bundler"><param name="gemfile" value="../${public-dir}/Gemfile" /></antcall>
     <antcall target="bundler"><param name="gemfile" value="../selenium-public/Gemfile" /></antcall>
     <antcall target="bundler"><param name="gemfile" value="../indexer/Gemfile" /></antcall>
-    <antcall target="bundler"><param name="gemfile" value="../plugins/nyu_sso_plugin/Gemfile" /></antcall>
   </target>
 
 
