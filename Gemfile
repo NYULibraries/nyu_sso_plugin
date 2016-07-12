@@ -1,7 +1,7 @@
 ASpaceGems.setup if defined? ASpaceGems
-require 'bundler/setup'
-
 source 'http://rubygems.org'
+
+require 'bundler/setup'
 
 gem 'omniauth', '1.2.1'
 gem 'omniauth-nyulibraries', :path => '../nyu_sso_plugin/gems/gems/omniauth-nyulibraries'
