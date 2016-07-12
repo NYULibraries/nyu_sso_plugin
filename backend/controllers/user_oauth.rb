@@ -7,6 +7,7 @@ require_relative '../lib/ssoauth_helper'
 class ArchivesSpaceService < Sinatra::Base
   include BCrypt
   include JSONModel
+  include SsoauthHelper
 
   Endpoint.get('/auth/nyulibraries/callback')
       .description("Omniauth NYULibraries Callback")
