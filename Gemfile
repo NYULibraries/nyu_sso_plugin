@@ -1,4 +1,4 @@
-ASpaceGems.setup if defined? ASpaceGems
+#ASpaceGems.setup if defined? ASpaceGems
 source 'http://rubygems.org'
 
 gem 'omniauth', '1.2.1'
