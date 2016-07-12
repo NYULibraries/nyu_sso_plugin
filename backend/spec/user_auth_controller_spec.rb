@@ -1,6 +1,7 @@
 require_relative '../lib/ssoauth_helper'
 #require_relative 'spec_helper'
 include SsoauthHelper
+include AuthHelpers
 
 describe 'Authentication callback' do
   let(:user) { create(:user, :username=>'test_sso')}
