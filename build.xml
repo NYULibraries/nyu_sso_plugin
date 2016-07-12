@@ -11,7 +11,7 @@
   <property name="winstone_url" value="http://repo1.maven.org/maven2/org/jvnet/hudson/winstone/winstone/0.9.10/winstone-0.9.10.jar" />
   <property name="winstone_file" value="winstone-0.9.10.jar" />
 
-  <property name="gem_home" location="gems" />
+  <property name="gem_home" location="gems:../plugins/nyu_sso_plugin/gems/gems" />
   <property name="aspace.backend.port" value="4567" />
   <property name="aspace.frontend.port" value="3000" />
   <property name="aspace.public.port" value="3001" />
