@@ -1,6 +1,6 @@
-require_relative '../lib/ssoauth_helper'
-#require_relative 'spec_helper'
-include SsoauthHelper
+require_relative '../../../../backend/app/lib/auth_helpers'
+require_relative 'spec_helper'
+include AuthHelpers
 
 describe 'Authentication callback' do
   let(:user) { create(:user, :username=>'test_sso')}
@@ -31,7 +31,6 @@ describe 'Authentication callback' do
   end
     context 'when user does not exist' do
       before do
-        OmniAuth.config.test_mode = true
         OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyu_shibboleth,
                                                  "uid"=>"name1",
                                                  "info"=>
@@ -53,7 +52,6 @@ describe 'Authentication callback' do
     end
   context 'when user login is invalid' do
     before do
-      OmniAuth.config.test_mode = true
       OmniAuth.config.mock_auth[:nyulibraries] = nil
       get 'auth/nyulibraries/callback'
     end
