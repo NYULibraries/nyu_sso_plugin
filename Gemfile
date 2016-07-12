@@ -1,8 +1,5 @@
- if defined? ASpaceGems
-   ASpaceGems.setup
- else
-   require 'bundler/setup'
- end
+ASpaceGems.setup if defined? ASpaceGems
+require 'bundler/setup'
 
 source 'http://rubygems.org'
 
