@@ -30,7 +30,9 @@ before_script:
 - git clone --branch master https://github.com/NYULibraries/omniauth-nyulibraries.git
 - mkdir -p archivesspace/plugins/nyu_sso_plugin/gems/gems
 - cp -r omniauth-nyulibraries archivesspace/plugins/nyu_sso_plugin/gems/gems/
-- gem build archivesspace/plugins/nyu_sso_plugin/gems/gems/omniauth-nyulibraries/omniauth-nyulibraries.gemspec
+- cd archivesspace/plugins/nyu_sso_plugin/gems/gems/omniauth-nyulibraries/
+- gem build omniauth-nyulibraries.gemspec
+- cd ../../../../../
 - gem install archivesspace/plugins/nyu_sso_plugin/gems/gems/omniauth-nyulibraries/omniauth-nyulibraries.gem
 - cp ../build.xml archivesspace/build
 notifications:
