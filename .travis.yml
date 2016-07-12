@@ -18,14 +18,12 @@ before_script:
 - if [[ "$DB" == "mysql" ]]; then mysql -e "create database archivesspace default
   character set utf8;"; fi
 - 'export JAVA_OPTS="-Xmx1G $JAVA_OPTS"'
-- mkdir -p opt
-- cd opt
 - git clone --branch 1.5-rc3-changed-rspec-tests https://github.com/NYULibraries/archivesspace.git
 - mkdir -p archivesspace/plugins/nyu_sso_plugin/backend
-- cp -r ../backend/* archivesspace/plugins/nyu_sso_plugin/backend
+- cp -r backend/* archivesspace/plugins/nyu_sso_plugin/backend
 - mkdir -p archivesspace/plugins/nyu_sso_plugin/frontend
-- cp -r ../frontend/* archivesspace/plugins/nyu_sso_plugin/frontend
-- cp ../Gemfile archivesspace/plugins/nyu_sso_plugin/
+- cp -r frontend/* archivesspace/plugins/nyu_sso_plugin/frontend
+- cp Gemfile archivesspace/plugins/nyu_sso_plugin/
 - echo "AppConfig[:plugins] = ['nyu_sso_plugins']"  > archivesspace/common/config/config.rb
 - git clone --branch master https://github.com/NYULibraries/omniauth-nyulibraries.git
 - mkdir -p archivesspace/plugins/nyu_sso_plugin/gems/gems
