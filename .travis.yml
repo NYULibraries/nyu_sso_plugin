@@ -30,10 +30,11 @@ before_script:
 - git clone --branch master https://github.com/NYULibraries/omniauth-nyulibraries.git
 - mkdir -p archivesspace/plugins/nyu_sso_plugin/gems/gems
 - cp -r omniauth-nyulibraries archivesspace/plugins/nyu_sso_plugin/gems/gems/
+- gem build archivesspace/plugins/nyu_sso_plugin/gems/gems/omniauth-nyulibraries/omniauth-nyulibraries.gemspec
+- gem install archivesspace/plugins/nyu_sso_plugin/gems/gems/omniauth-nyulibraries/omniauth-nyulibraries.gem
 - cp ../build.xml archivesspace/build
 notifications:
   slack: nyu-dlts:soXKrVQlFYngL6O9HvlcZFz2
 script:
-- archivespace/scripts/initialize-plugin.sh nyu_sso_plugin
 - archivesspace/build/run $TASK $TASK_OPTS
 sudo: false
