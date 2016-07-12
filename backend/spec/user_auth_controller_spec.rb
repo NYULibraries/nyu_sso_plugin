@@ -8,7 +8,7 @@ describe 'Authentication callback' do
   let(:user) { create(:user, :username=>'test_sso')}
   before do
     OmniAuth.config.test_mode = true
-    OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyu_shibboleth,
+    OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
                                              "uid"=>"test_sso",
                                              "info"=>
                                                  {"name"=>"test_sso",
@@ -19,13 +19,14 @@ describe 'Authentication callback' do
                                                   "expires_at"=>1111111111,
                                                   "expires"=>true},
                                              "extra"=>
-                                                 {"provider"=>:nyulibraries,
+                                                 {"provider"=>"nyu_shibboleth",
                                                   "identities"=>nil},})
     get 'auth/nyulibraries/callback'
   end
   context 'when login was successful' do
     it 'should redirect to the frontend login_sso method after login' do
     expect(last_response.redirect?).to be true
+    puts last_response.inspect
     follow_redirect!
     expect(last_request.path).to eq('/login_sso')
     expect(Session.find(last_request.params['session'])[:user]).to eq('test_sso')
@@ -34,7 +35,7 @@ describe 'Authentication callback' do
     context 'when user does not exist' do
       before do
         OmniAuth.config.test_mode = true
-        OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyu_shibboleth,
+        OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
                                                  "uid"=>"name1",
                                                  "info"=>
                                                      {"name"=>"name1",
@@ -45,7 +46,7 @@ describe 'Authentication callback' do
                                                       "expires_at"=>1111111111,
                                                       "expires"=>true},
                                                  "extra"=>
-                                                     {"provider"=>:nyulibraries,
+                                                     {"provider"=>"nyu_shibboleth",
                                                       "identities"=>nil},})
         get 'auth/nyulibraries/callback'
       end
