@@ -3,6 +3,7 @@ require_relative '../lib/ssoauth_helper'
 include SsoauthHelper
 include AuthHelpers
 
+
 describe 'Authentication callback' do
   let(:user) { create(:user, :username=>'test_sso')}
   before do
@@ -79,7 +80,7 @@ describe 'Session verification' do
   end
   end
   context 'when session was created for a different user' do
-  let(:session) { AuthHelpers::create_session_for("test2",true) }
+  let(:session) { create_session_for("test2",true) }
   let(:session_id) { session.id }
   it 'should return login failed' do
     expect(last_response.body).to include("\"error\":\"Login Failed\"")

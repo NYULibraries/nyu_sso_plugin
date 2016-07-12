@@ -8,6 +8,7 @@ class ArchivesSpaceService < Sinatra::Base
   include BCrypt
   include JSONModel
   include SsoauthHelper
+  include AuthHelpers
 
   Endpoint.get('/auth/nyulibraries/callback')
       .description("Omniauth NYULibraries Callback")
