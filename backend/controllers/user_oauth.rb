@@ -19,7 +19,7 @@ class ArchivesSpaceService < Sinatra::Base
     auth = request.env['omniauth.auth']
 
     if auth.nil? || auth.extra.nil? || auth.extra.provider!="nyu_shibboleth"
-      redirect("#{AppConfig[:frontend_url]}/login_sso?error=failed")
+      redirect("#{AppConfig[:frontend_host_url]}/login_sso?error=failed")
     end
 
     username=auth.uid
@@ -35,7 +35,7 @@ class ArchivesSpaceService < Sinatra::Base
 
     session = create_session_for(username, params[:expiring])
     session[:state]= auth_token
-    redirect "#{AppConfig[:frontend_url]}/login_sso?session=#{session.id}&user=#{username}"
+    redirect "#{AppConfig[:frontend_host_url]}/login_sso?session=#{session.id}&user=#{username}"
   end
 
   Endpoint.post('/users/:username/:session_id/verify')

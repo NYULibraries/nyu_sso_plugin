@@ -40,7 +40,7 @@ class SsologinController < ApplicationController
 
   def logout()
     reset_session
-    redirect("https://login.library.nyu.edu/logged_out")
+    redirect "#{AppConfig[:ssologout_url]}"
   end
 
   end
