@@ -18,10 +18,14 @@ class ArchivesSpaceService < Sinatra::Base
 
     auth = request.env['omniauth.auth']
 
-    omniauth_identities ||= auth.extra.identities
+    omniauth_identities=[]
 
-    omniauth_aleph_identity ||= omniauth_identities.find do |omniauth_identity|
+    if !auth.extra.nil
+      omniauth_identities ||= auth.extra.identities
+
+      omniauth_aleph_identity ||= omniauth_identities.find do |omniauth_identity|
         omniauth_identity.provider == 'aleph'
+      end
     end
 
 

@@ -58,6 +58,31 @@ describe 'Authentication callback' do
         expect(User.find(:name=>'name name1')).not_to be nil
       end
     end
+  context 'when user tries to connect with invalid provider' do
+    before do
+      OmniAuth.config.test_mode = true
+      OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
+                                               "uid"=>"name1",
+                                               "info"=>
+                                                   {"name"=>"name1",
+                                                    "nickname"=>"name",
+                                                    "email"=>"test1@site.com",
+                                                    "last_name"=>"name",
+                                                    "first_name"=>"name1"},
+                                               "credentials"=>
+                                                   {"token"=>"token",
+                                                    "expires_at"=>1111111111,
+                                                    "expires"=>true},
+                                               "extra"=>
+                                                   {"provider"=>"nyu_shibboleth",
+                                                    "identities" => [{ "provider" => "wrong_provider", "properties" => {"last_name"=>"name","first_name"=>"name1"}}]}})
+      get 'auth/nyulibraries/callback'
+    end
+    it 'should be created' do
+      follow_redirect!
+      expect(last_request.params['error']).to eq('failed')
+    end
+  end
   context 'when user login is invalid' do
     before do
       OmniAuth.config.test_mode = true
