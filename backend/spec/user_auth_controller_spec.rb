@@ -65,6 +65,16 @@ describe 'Authentication callback' do
       expect(last_request.params['error']).to eq('failed')
   end
   end
+end
+
+describe 'Authentication failure' do
+  before do
+    get 'auth/failure'
+  end
+    it 'should redirect to the frontend error page' do
+      follow_redirect!
+      expect(last_request.params['error']).to eq('failed')
+    end
   end
 
 describe 'Session verification' do

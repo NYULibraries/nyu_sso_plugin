@@ -1,0 +1,7 @@
+---
+node_default_message: 'Applying node default'
+archivesspace::auth_key: 'secret_word_goes_here'
+archivesspace::sso_url: 'localhost'
+archivesspace::frontend_port: '8080'
+archivesspace::backend_port: '8089'
+archivesspace::ap_id: 'ap_id_goes_here'
