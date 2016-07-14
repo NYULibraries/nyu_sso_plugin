@@ -22,7 +22,7 @@ describe 'Authentication callback' do
                                                   "expires"=>true},
                                              "extra"=>
                                                  {"provider"=>"nyu_shibboleth",
-                                                  "identities"=>nil},})
+                                                  "identities" => [{ "provider" => "aleph", "properties" => {"last_name"=>"last_name","first_name"=>"first_name"}}]}})
     get 'auth/nyulibraries/callback'
   end
   context 'when login was successful' do
@@ -51,7 +51,7 @@ describe 'Authentication callback' do
                                                       "expires"=>true},
                                                  "extra"=>
                                                      {"provider"=>"nyu_shibboleth",
-                                                      "identities"=>nil},})
+                                                      "identities" => [{ "provider" => "aleph", "properties" => {"last_name"=>"name","first_name"=>"name1"}}]}})
         get 'auth/nyulibraries/callback'
       end
       it 'should be created' do

@@ -18,7 +18,14 @@ class ArchivesSpaceService < Sinatra::Base
 
     auth = request.env['omniauth.auth']
 
-    if auth.nil? || auth.extra.nil? || auth.extra.provider!="nyu_shibboleth"
+    omniauth_identities ||= omniauth.extra.identities
+
+    omniauth_aleph_identity ||= omniauth_identities.find do |omniauth_identity|
+        omniauth_identity.provider == 'aleph'
+    end
+
+
+    if auth.nil? || auth.extra.nil? || omniauth_aleph_identity.blank?
       redirect("#{AppConfig[:frontend_sso_url]}/login_sso?error=failed")
     end
 
