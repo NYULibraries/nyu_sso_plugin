@@ -28,7 +28,6 @@ describe 'Authentication callback' do
   context 'when login was successful' do
     it 'should redirect to the frontend login_sso method after login' do
     expect(last_response.redirect?).to be true
-    puts last_response.inspect
     follow_redirect!
     expect(last_request.path).to eq('/login_sso')
     expect(Session.find(last_request.params['session'])[:user]).to eq('test_sso')
