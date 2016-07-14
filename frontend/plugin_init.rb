@@ -10,6 +10,10 @@ AppConfig[:heira_path]="/etc/puppet/hieradata/common.yaml"
 sso_url="aspace-stage.dlts.org"
 backend_port="8489"
 
+if(!File.exists?(AppConfig[:heira_path]))
+  AppConfig[:heira_path]="common.yaml"
+end
+
 
  if File.exists?(AppConfig[:heira_path])
 
