@@ -13,7 +13,9 @@ describe 'Authentication callback' do
                                              "info"=>
                                                  {"name"=>"test_sso",
                                                   "nickname"=>"name",
-                                                  "email"=>"test_sso@site.com"},
+                                                  "email"=>"test_sso@site.com",
+                                                  "last_name"=>"name",
+                                                  "first_name"=>"test_sso"},
                                              "credentials"=>
                                                  {"token"=>"token",
                                                   "expires_at"=>1111111111,
@@ -40,7 +42,9 @@ describe 'Authentication callback' do
                                                  "info"=>
                                                      {"name"=>"name1",
                                                       "nickname"=>"name",
-                                                      "email"=>"test1@site.com"},
+                                                      "email"=>"test1@site.com",
+                                                      "last_name"=>"name",
+                                                      "first_name"=>"name1"},
                                                  "credentials"=>
                                                      {"token"=>"token",
                                                       "expires_at"=>1111111111,
@@ -52,6 +56,7 @@ describe 'Authentication callback' do
       end
       it 'should be created' do
         expect(User.find(:username=>'name1')).not_to be nil
+        expect(User.find(:name=>'name name1')).not_to be nil
       end
     end
   context 'when user login is invalid' do

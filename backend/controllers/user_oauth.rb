@@ -28,7 +28,9 @@ class ArchivesSpaceService < Sinatra::Base
     user = User.find(:username => username)
 
     if user.nil?
-      user=create_user_from_omniauth(username)
+      first_name||=auth.info.first_name
+      last_name||=auth.info.last_name
+      user=create_user_from_omniauth(username,last_name,first_name)
     end
 
     add_user_to_auth_db(username, auth_token)

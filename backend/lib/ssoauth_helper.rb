@@ -2,9 +2,9 @@
    include BCrypt
    include JSONModel
 
-    def create_user_from_omniauth(username)
+    def create_user_from_omniauth(username,last_name,first_name)
       user_json=JSONModel(:user).from_hash(:username => username,
-                                 :name => username)
+                                 :name => "#{last_name} #{first_name}" )
       User.create_from_json(user_json,{})
     end
 
