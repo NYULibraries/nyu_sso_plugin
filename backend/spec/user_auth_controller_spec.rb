@@ -7,94 +7,90 @@ include AuthHelpers
 describe 'Authentication callback' do
   let(:user) { create(:user, :username=>'test_sso')}
   before do
-    OmniAuth.config.test_mode = true
     OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
                                              "uid"=>"test_sso",
                                              "info"=>
                                                  {"name"=>"test_sso",
                                                   "nickname"=>"name",
                                                   "email"=>"test_sso@site.com",
-                                                  "last_name"=>"name",
-                                                  "first_name"=>"test_sso"},
+                                                  "last_name"=>"last_name",
+                                                  "first_name"=>"first_name"},
                                              "credentials"=>
                                                  {"token"=>"token",
                                                   "expires_at"=>1111111111,
                                                   "expires"=>true},
                                              "extra"=>
-                                                 {"provider"=>"nyu_shibboleth",
-                                                  "identities" => [{ "provider" => "aleph", "properties" => {"last_name"=>"last_name","first_name"=>"first_name"}}]}})
+                                                 {"provider"=>:nyulibraries,
+                                                  "identities"=>[{ "provider" => "aleph", "properties" => {"last_name"=>"last_name","first_name"=>"first_name"}}]},})
     get 'auth/nyulibraries/callback'
   end
   context 'when login was successful' do
     it 'should redirect to the frontend login_sso method after login' do
-    expect(last_response.redirect?).to be true
-    follow_redirect!
-    expect(last_request.path).to eq('/login_sso')
-    expect(Session.find(last_request.params['session'])[:user]).to eq('test_sso')
+      expect(last_response.redirect?).to be true
+      follow_redirect!
+      expect(last_request.path).to eq('/login_sso')
+      expect(Session.find(last_request.params['session'])[:user]).to eq('test_sso')
     end
   end
-    context 'when user does not exist' do
-      before do
-        OmniAuth.config.test_mode = true
-        OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
-                                                 "uid"=>"name1",
-                                                 "info"=>
-                                                     {"name"=>"name1",
-                                                      "nickname"=>"name",
-                                                      "email"=>"test1@site.com",
-                                                      "last_name"=>"name",
-                                                      "first_name"=>"name1"},
-                                                 "credentials"=>
-                                                     {"token"=>"token",
-                                                      "expires_at"=>1111111111,
-                                                      "expires"=>true},
-                                                 "extra"=>
-                                                     {"provider"=>"nyu_shibboleth",
-                                                      "identities" => [{ "provider" => "aleph", "properties" => {"last_name"=>"name","first_name"=>"name1"}}]}})
-        get 'auth/nyulibraries/callback'
-      end
-      it 'should be created' do
-        expect(User.find(:username=>'name1')).not_to be nil
-        expect(User.find(:name=>'name name1')).not_to be nil
-      end
-    end
-  context 'when user tries to connect with invalid provider' do
+  context 'when user does not exist' do
     before do
-      OmniAuth.config.test_mode = true
       OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
                                                "uid"=>"name1",
                                                "info"=>
                                                    {"name"=>"name1",
                                                     "nickname"=>"name",
                                                     "email"=>"test1@site.com",
-                                                    "last_name"=>"name",
-                                                    "first_name"=>"name1"},
+                                                   "last_name"=>"name1",
+                                                   "first_name"=>"name"},
                                                "credentials"=>
                                                    {"token"=>"token",
                                                     "expires_at"=>1111111111,
                                                     "expires"=>true},
                                                "extra"=>
-                                                   {"provider"=>"nyu_shibboleth",
-                                                    "identities" => [{ "provider" => "wrong_provider", "properties" => {"last_name"=>"name","first_name"=>"name1"}}]}})
+                                                   {"provider"=>:nyulibraries,
+                                                    "identities"=>[{ "provider" => "aleph", "properties" => {"last_name"=>"last_name","first_name"=>"first_name"}}]},})
       get 'auth/nyulibraries/callback'
     end
     it 'should be created' do
-      follow_redirect!
-      expect(last_request.params['error']).to eq('failed')
+      expect(User.find(:username=>'name1')).not_to be nil
     end
   end
   context 'when user login is invalid' do
     before do
-      OmniAuth.config.test_mode = true
       OmniAuth.config.mock_auth[:nyulibraries] = nil
       get 'auth/nyulibraries/callback'
     end
     it 'should send error message' do
       follow_redirect!
       expect(last_request.params['error']).to eq('failed')
+    end
   end
+  context 'when user has invalid provider' do
+    before do
+      OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
+                                               "uid"=>"name1",
+                                               "info"=>
+                                                   {"name"=>"name1",
+                                                    "nickname"=>"name",
+                                                    "email"=>"test1@site.com",
+                                                    "last_name"=>"name1",
+                                                    "first_name"=>"name"},
+                                               "credentials"=>
+                                                   {"token"=>"token",
+                                                    "expires_at"=>1111111111,
+                                                    "expires"=>true},
+                                               "extra"=>
+                                                   {"provider"=>:nyulibraries,
+                                                    "identities"=>[{ "provider" => "wrong provider", "properties" => {"last_name"=>"last_name","first_name"=>"first_name"}}]},})
+      get 'auth/nyulibraries/callback'
+    end
+    it 'should send error message' do
+      follow_redirect!
+      expect(last_request.params['error']).to eq('failed')
+    end
   end
 end
+
 
 describe 'Authentication failure' do
   before do
