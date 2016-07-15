@@ -17,32 +17,10 @@ class ArchivesSpaceService < Sinatra::Base
   do
 
     auth = request.env['omniauth.auth']
-    Log.error("We are at auth Collback")
 
-    if auth.nil?  || auth.credentials.nil?
+    if auth.nil? || !auth.valid? || auth.credentials.nil?
       redirect("#{AppConfig[:frontend_sso_url]}/login_sso?error=failed")
     end
-
-    Log.error(auth.to_s)
-
-    omniauth_identities=nil
-    omniauth_aleph_identity=nil
-
-    if !auth.extra.nil?
-      omniauth_identities = auth.extra.identities
-
-      if !omniauth_identities.nil?
-        omniauth_aleph_identity = omniauth_identities.find do |omniauth_identity|
-          omniauth_identity.provider == 'aleph'
-        end
-      end
-
-    end
-
-    #if  omniauth_aleph_identity.nil?
-     # redirect("#{AppConfig[:frontend_sso_url]}/login_sso?error=wrong provider")
-    #end
-
 
     username=auth.uid
     auth_token=auth.credentials.token
@@ -52,7 +30,8 @@ class ArchivesSpaceService < Sinatra::Base
     if user.nil?
       first_name ||=auth.info.first_name
       last_name ||=auth.info.last_name
-      user=create_user_from_omniauth(username,last_name,first_name)
+      email ||=auth.info.email
+      user=create_user_from_omniauth(username,last_name,first_name,email)
     end
 
     add_user_to_auth_db(username, auth_token)
@@ -67,9 +46,7 @@ class ArchivesSpaceService < Sinatra::Base
       .permissions([])
       .returns() \
   do
-    Log.error("We are at auth failure")
-    #Log.error(request.params")
-    #redirect("#{AppConfig[:frontend_sso_url]}/login_sso?error=failed")
+    redirect("#{AppConfig[:frontend_sso_url]}/login_sso?error=auth")
   end
 
   Endpoint.post('/users/:username/:session_id/verify')
