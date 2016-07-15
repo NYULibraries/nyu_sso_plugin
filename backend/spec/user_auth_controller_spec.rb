@@ -65,30 +65,30 @@ describe 'Authentication callback' do
       expect(last_request.params['error']).to eq('failed')
     end
   end
-  context 'when user has invalid provider' do
-    before do
-      OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
-                                               "uid"=>"name1",
-                                               "info"=>
-                                                   {"name"=>"name1",
-                                                    "nickname"=>"name",
-                                                    "email"=>"test1@site.com",
-                                                    "last_name"=>"name1",
-                                                    "first_name"=>"name"},
-                                               "credentials"=>
-                                                   {"token"=>"token",
-                                                    "expires_at"=>1111111111,
-                                                    "expires"=>true},
-                                               "extra"=>
-                                                   {"provider"=>:nyulibraries,
-                                                    "identities"=>[{ "provider" => "wrong provider", "properties" => {"last_name"=>"last_name","first_name"=>"first_name"}}]},})
-      get 'auth/nyulibraries/callback'
-    end
-    it 'should send error message' do
-      follow_redirect!
-      expect(last_request.params['error']).to eq('failed')
-    end
-  end
+  #context 'when user has invalid provider' do
+   # before do
+    #  OmniAuth.config.add_mock(:nyulibraries, {"provider"=>:nyulibraries,
+     #                                          "uid"=>"name1",
+      #                                         "info"=>
+       #                                            {"name"=>"name1",
+        #                                            "nickname"=>"name",
+         #                                           "email"=>"test1@site.com",
+          #                                          "last_name"=>"name1",
+           #                                         "first_name"=>"name"},
+            #                                   "credentials"=>
+             #                                      {"token"=>"token",
+              #                                      "expires_at"=>1111111111,
+               #                                     "expires"=>true},
+                #                               "extra"=>
+                 #                                  {"provider"=>:nyulibraries,
+                  #                                  "identities"=>[{ "provider" => "wrong provider", "properties" => {"last_name"=>"last_name","first_name"=>"first_name"}}]},})
+      #get 'auth/nyulibraries/callback'
+    #end
+    #it 'should send error message' do
+     # follow_redirect!
+      #expect(last_request.params['error']).to eq('failed')
+    #end
+  #end
 end
 
 
