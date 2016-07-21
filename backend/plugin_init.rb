@@ -20,8 +20,8 @@ if File.exists?(AppConfig[:heira_path])
   heira_hash.each do |key,value|
     sso_url=value if key.include? "sso_url"
     frontend_port=value if key.include? "frontend_port"
-    AppConfig[:ap_id]=value if key.include? "ap_id"
-    AppConfig[:auth_key]=value if key.include? "auth_key"
+    AppConfig[:ap_id]=value if key.include? "archivesspace::ap_id:"
+    AppConfig[:auth_key]=value if key.include? "archivesspace::auth_key:"
   end
 
 end
