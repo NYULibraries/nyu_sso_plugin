@@ -5,33 +5,24 @@ require "yaml"
 my_routes = [File.join(File.dirname(__FILE__), "routes.rb")]
 ArchivesSpace::Application.config.paths['config/routes'].concat(my_routes)
 
-AppConfig[:heira_path]="/etc/puppet/hieradata/common.yaml"
-
-sso_url="aspace-stage.dlts.org"
+sso_url="archivesspace-stage.library.nyu.edu"
 backend_port="8489"
 
-if(!File.exists?(AppConfig[:heira_path]))
-  AppConfig[:heira_path]="common.yaml"
-end
-
+AppConfig[:heira_path]="/etc/puppet/hieradata/common.yaml"
 
  if File.exists?(AppConfig[:heira_path])
 
    heira_hash=YAML::load_file(AppConfig[:heira_path])
 
-   heira_hash.each do |key,value|
-        sso_url=value if key.include? "sso_url"
-        backend_port=value if key.include? "backend_port"
-   end
+   sso_url=heira_hash["archivesspace::sso_url"]
+   backend_port=heira_hash["archivesspace::backend_port"]
 
  end
 
-  AppConfig[:sso_url]=sso_url
+backend_port.empty? ? AppConfig[:backend_sso_url]= "https://#{sso_url}":AppConfig[:backend_sso_url]= "https://#{sso_url}:#{backend_port}"
 
-  backend_port.empty? ? AppConfig[:backend_sso_url]= "https://#{sso_url}":AppConfig[:backend_sso_url]= "https://#{sso_url}:#{backend_port}"
+AppConfig[:ssologin_url]="#{AppConfig[:backend_sso_url]}/auth/nyulibraries"
 
-  AppConfig[:ssologin_url]="#{AppConfig[:backend_sso_url]}/auth/nyulibraries"
-
-  AppConfig[:ssologout_url]="https://login.library.nyu.edu/logged_out"
+AppConfig[:ssologout_url]="https://login.library.nyu.edu/logged_out"
 
 

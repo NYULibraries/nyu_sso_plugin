@@ -7,26 +7,21 @@ include SsoauthHelper
 
 AppConfig[:heira_path]="/etc/puppet/hieradata/common.yaml"
 
-sso_url="aspace-stage.dlts.org"
+sso_url="archivesspace-stage.library.nyu.edu"
 frontend_port="8480"
 AppConfig[:ap_id]="3cc3e7e396c1d431424fce3469f282058d2fbc035d5961eead87992a96eee90e"
 AppConfig[:auth_key]="key"
 
-
 if File.exists?(AppConfig[:heira_path])
 
   heira_hash=YAML::load_file(AppConfig[:heira_path])
-
-  heira_hash.each do |key,value|
-    sso_url=value if key.include? "sso_url"
-    frontend_port=value if key.include? "frontend_port"
-    AppConfig[:ap_id]=value if key.include? "ap_id"
-    AppConfig[:auth_key]=value if key.include? "auth_key"
-  end
+  
+  sso_url=heira_hash["archivesspace::sso_url"]
+  frontend_port=heira_hash["archivesspace::frontend_port"]
+  AppConfig[:ap_id]=heira_hash["archivesspace::ap_id"]
+  AppConfig[:auth_key]=heira_hash["archivesspace::auth_key"]
 
 end
-
-AppConfig[:sso_url]=sso_url
 
 frontend_port.empty? ? AppConfig[:frontend_sso_url]= "https://#{sso_url}":AppConfig[:frontend_sso_url]= "https://#{sso_url}:#{frontend_port}"
 
