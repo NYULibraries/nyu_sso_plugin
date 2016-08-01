@@ -23,7 +23,7 @@ if File.exists?(AppConfig[:heira_path])
 
 end
 
-frontend_port.nil? ? AppConfig[:frontend_sso_url]= "https://#{sso_url}":AppConfig[:frontend_sso_url]= "https://#{sso_url}:#{frontend_port}"
+frontend_port.empty? ? AppConfig[:frontend_sso_url]= "https://#{sso_url}":AppConfig[:frontend_sso_url]= "https://#{sso_url}:#{frontend_port}"
 
 class ArchivesSpaceService < Sinatra::Base
   use Rack::Session::Cookie, :key => 'rack.session',
