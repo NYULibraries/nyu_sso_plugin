@@ -15,7 +15,7 @@ AppConfig[:auth_key]="key"
 if File.exists?(AppConfig[:heira_path])
 
   heira_hash=YAML::load_file(AppConfig[:heira_path])
-  
+
   sso_url=heira_hash["archivesspace::sso_url"]
   frontend_port=heira_hash["archivesspace::frontend_port"]
   AppConfig[:ap_id]=heira_hash["archivesspace::ap_id"]
@@ -23,7 +23,7 @@ if File.exists?(AppConfig[:heira_path])
 
 end
 
-frontend_port.empty? ? AppConfig[:frontend_sso_url]= "https://#{sso_url}":AppConfig[:frontend_sso_url]= "https://#{sso_url}:#{frontend_port}"
+frontend_port.nil? ? AppConfig[:frontend_sso_url]= "https://#{sso_url}":AppConfig[:frontend_sso_url]= "https://#{sso_url}:#{frontend_port}"
 
 class ArchivesSpaceService < Sinatra::Base
   use Rack::Session::Cookie, :key => 'rack.session',
