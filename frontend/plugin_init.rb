@@ -19,7 +19,7 @@ AppConfig[:heira_path]="/etc/puppet/hieradata/common.yaml"
 
  end
 
-backend_port.empty? ? AppConfig[:backend_sso_url]= "https://#{sso_url}":AppConfig[:backend_sso_url]= "https://#{sso_url}:#{backend_port}"
+backend_port.nil? ? AppConfig[:backend_sso_url]= "https://#{sso_url}":AppConfig[:backend_sso_url]= "https://#{sso_url}:#{backend_port}"
 
 AppConfig[:ssologin_url]="#{AppConfig[:backend_sso_url]}/auth/nyulibraries"
 
