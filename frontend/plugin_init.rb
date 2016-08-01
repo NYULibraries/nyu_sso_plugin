@@ -23,6 +23,6 @@ sso_backend_port.empty? ? AppConfig[:backend_sso_url]= "https://#{sso_url}":AppC
 
 AppConfig[:ssologin_url]="#{AppConfig[:backend_sso_url]}/auth/nyulibraries"
 
-AppConfig[:ssologout_url]="https://login.library.nyu.edu/logged_out"
+AppConfig[:ssologout_url]="https://dev.login.library.nyu.edu/logged_out"
 
 
