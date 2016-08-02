@@ -31,7 +31,7 @@ class ArchivesSpaceService < Sinatra::Base
       :secret => 'archivesspace remote SSO session'
 
   use OmniAuth::Builder do
-    provider :'nyulibraries', AppConfig[:ap_id], AppConfig[:auth_key]
+    provider :nyulibraries, AppConfig[:ap_id], AppConfig[:auth_key],
     {
             site: 'dev.login.library.nyu.edu',
             authorize_path: '/oauth/authorize'
