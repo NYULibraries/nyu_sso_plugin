@@ -6,7 +6,7 @@ my_routes = [File.join(File.dirname(__FILE__), "routes.rb")]
 ArchivesSpace::Application.config.paths['config/routes'].concat(my_routes)
 
 sso_url="archivesspace-stage.library.nyu.edu"
-backend_port="8489"
+sso_backend_port="8489"
 
 AppConfig[:heira_path]="/etc/puppet/hieradata/common.yaml"
 
@@ -15,11 +15,11 @@ AppConfig[:heira_path]="/etc/puppet/hieradata/common.yaml"
    heira_hash=YAML::load_file(AppConfig[:heira_path])
 
    sso_url=heira_hash["archivesspace::sso_url"]
-   backend_port=heira_hash["archivesspace::backend_port"]
+   sso_backend_port=heira_hash["archivesspace::sso_backend_port"]
 
  end
 
-backend_port.empty? ? AppConfig[:backend_sso_url]= "https://#{sso_url}":AppConfig[:backend_sso_url]= "https://#{sso_url}:#{backend_port}"
+backend_port.empty? ? AppConfig[:backend_sso_url]= "https://#{sso_url}":AppConfig[:backend_sso_url]= "https://#{sso_url}:#{sso_backend_port}"
 
 AppConfig[:ssologin_url]="#{AppConfig[:backend_sso_url]}/auth/nyulibraries"
 
