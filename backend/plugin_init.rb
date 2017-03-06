@@ -32,10 +32,9 @@ class ArchivesSpaceService < Sinatra::Base
 
   use OmniAuth::Builder do
     provider :nyulibraries, AppConfig[:ap_id], AppConfig[:auth_key],
-    {
-            site: 'dev.login.library.nyu.edu',
+    client_options: {
+            site: 'https://dev.login.library.nyu.edu',
             authorize_path: '/oauth/authorize'
-
     }
   end
 
