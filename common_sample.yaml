@@ -1,7 +1,7 @@
 ---
 node_default_message: 'Applying node default'
-archivesspace::auth_key: 'secret_word_goes_here'
-archivesspace::sso_url: 'localhost'
-archivesspace::sso_frontend_port: '8080'
-archivesspace::sso_backend_port: '8089'
-archivesspace::ap_id: 'ap_id_goes_here'
+aspacesso::acm::auth_key: 'secret_word_goes_here'
+aspacesso::acm::sso_url: 'localhost'
+aspacesso::acm:sso_frontend_port: '8080'
+aspacesso::acm::sso_backend_port: '8089'
+aspacesso::acm::ap_id: 'ap_id_goes_here'
