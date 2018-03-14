@@ -5,7 +5,7 @@ require "yaml"
 
 include SsoauthHelper
 
-AppConfig[:heira_path]="/etc/puppetlabs/code/environments/development/data/aspacesso.yaml"
+AppConfig[:heira_path]="/etc/puppetlabs/code/environments/development/data/aspace_sso.yaml"
 
 sso_url="archivesspace-stage.library.nyu.edu"
 sso_frontend_port="8480"

@@ -7,7 +7,7 @@ ArchivesSpace::Application.extend_aspace_routes(File.join(File.dirname(__FILE__)
 sso_url="archivesspace-stage.library.nyu.edu"
 sso_backend_port="8489"
 
-AppConfig[:heira_path]="/etc/puppetlabs/code/environments/development/data/aspacesso.yaml"
+AppConfig[:heira_path]="/etc/puppetlabs/code/environments/development/data/aspace_sso.yaml"
 
  if File.exists?(AppConfig[:heira_path])
 
