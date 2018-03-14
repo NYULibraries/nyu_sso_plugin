@@ -9,6 +9,7 @@ AppConfig[:heira_path]="/etc/puppetlabs/code/environments/development/data/aspac
 
 sso_url="archivesspace-stage.library.nyu.edu"
 sso_frontend_port="8480"
+sso_login_url="https://dev.login.library.nyu.edu"
 AppConfig[:ap_id]="3cc3e7e396c1d431424fce3469f282058d2fbc035d5961eead87992a96eee90e"
 AppConfig[:auth_key]="key"
 
@@ -16,10 +17,11 @@ if File.exists?(AppConfig[:heira_path])
 
   heira_hash=YAML::load_file(AppConfig[:heira_path])
 
-  sso_url=heira_hash["aspacesso::acm::sso_url"]
-  sso_frontend_port=heira_hash["aspacesso::acm::sso_frontend_port"]
-  AppConfig[:ap_id]=heira_hash["aspacesso::acm::ap_id"]
-  AppConfig[:auth_key]=heira_hash["aspacesso::acm::auth_key"]
+  sso_url=heira_hash["aspace_sso::acm::sso_url"]
+  sso_frontend_port=heira_hash["aspace_sso::acm::sso_frontend_port"]
+  sso_login_url=heira_hash["aspace_sso::acm::sso_login_url"]
+  AppConfig[:ap_id]=heira_hash["aspace_sso::acm::ap_id"]
+  AppConfig[:auth_key]=heira_hash["aspace_sso::acm::auth_key"]
 
 end
 
@@ -33,7 +35,7 @@ class ArchivesSpaceService < Sinatra::Base
   use OmniAuth::Builder do
     provider :nyulibraries, AppConfig[:ap_id], AppConfig[:auth_key],
     client_options: {
-            site: 'https://dev.login.library.nyu.edu',
+            site: '"#{sso_login_url}"',
             authorize_path: '/oauth/authorize'
     }
   end

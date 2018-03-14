@@ -6,6 +6,7 @@ ArchivesSpace::Application.extend_aspace_routes(File.join(File.dirname(__FILE__)
 
 sso_url="archivesspace-stage.library.nyu.edu"
 sso_backend_port="8489"
+sso_login_url="dev.login.library.nyu.edu"
 
 AppConfig[:heira_path]="/etc/puppetlabs/code/environments/development/data/aspace_sso.yaml"
 
@@ -13,8 +14,9 @@ AppConfig[:heira_path]="/etc/puppetlabs/code/environments/development/data/aspac
 
    heira_hash=YAML::load_file(AppConfig[:heira_path])
 
-   sso_url=heira_hash["aspacesso::acm::sso_url"]
-   sso_backend_port=heira_hash["aspacesso::acm::sso_backend_port"]
+   sso_url=heira_hash["aspace_sso::acm::sso_url"]
+   sso_backend_port=heira_hash["aspace_sso::acm::sso_backend_port"]
+   sso_login_url=heira_hash["aspace_sso::acm::sso_login_url"]
 
  end
 
@@ -22,6 +24,6 @@ sso_backend_port.empty? ? AppConfig[:backend_sso_url]= "https://#{sso_url}":AppC
 
 AppConfig[:ssologin_url]="#{AppConfig[:backend_sso_url]}/auth/nyulibraries"
 
-AppConfig[:ssologout_url]="https://dev.login.library.nyu.edu/logged_out"
+AppConfig[:ssologout_url]="https://#{sso_login_url}/logged_out"
 
 
