@@ -8,15 +8,15 @@ sso_url="archivesspace-stage.library.nyu.edu"
 sso_backend_port="8489"
 sso_login_url="dev.login.library.nyu.edu"
 
-AppConfig[:heira_path]="/etc/puppetlabs/code/environments/development/data/aspace_sso.yaml"
+AppConfig[:heira_path]="/etc/puppetlabs/code/environments/development/data/profiles.yaml"
 
  if File.exists?(AppConfig[:heira_path])
 
    heira_hash=YAML::load_file(AppConfig[:heira_path])
 
-   sso_url=heira_hash["aspace_sso::acm::sso_url"]
-   sso_backend_port=heira_hash["aspace_sso::acm::sso_backend_port"]
-   sso_login_url=heira_hash["aspace_sso::acm::sso_login_url"]
+   sso_url=heira_hash["profiles::acm::sso_url"]
+   sso_backend_port=heira_hash["profiles::acm::sso_backend_port"]
+   sso_login_url=heira_hash["profiles::acm::sso_login_url"]
 
  end
 

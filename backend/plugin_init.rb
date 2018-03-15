@@ -5,7 +5,7 @@ require "yaml"
 
 include SsoauthHelper
 
-AppConfig[:heira_path]="/etc/puppetlabs/code/environments/development/data/aspace_sso.yaml"
+AppConfig[:heira_path]="/etc/puppetlabs/code/environments/development/data/profiles.yaml"
 
 sso_url="archivesspace-stage.library.nyu.edu"
 sso_frontend_port="8480"
@@ -17,11 +17,11 @@ if File.exists?(AppConfig[:heira_path])
 
   heira_hash=YAML::load_file(AppConfig[:heira_path])
 
-  sso_url=heira_hash["aspace_sso::acm::sso_url"]
-  sso_frontend_port=heira_hash["aspace_sso::acm::sso_frontend_port"]
-  sso_login_url=heira_hash["aspace_sso::acm::sso_login_url"]
-  AppConfig[:ap_id]=heira_hash["aspace_sso::acm::ap_id"]
-  AppConfig[:auth_key]=heira_hash["aspace_sso::acm::auth_key"]
+  sso_url=heira_hash["profiles::acm::sso_url"]
+  sso_frontend_port=heira_hash["profiles::acm::sso_frontend_port"]
+  sso_login_url=heira_hash["profiles::acm::sso_login_url"]
+  AppConfig[:ap_id]=heira_hash["profiles::acm::ap_id"]
+  AppConfig[:auth_key]=heira_hash["profiles::acm::auth_key"]
 
 end
 
